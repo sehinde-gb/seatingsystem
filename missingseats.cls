@@ -22,32 +22,47 @@ ClassMethod Import(dir As %String = "/usr/local/day11.txt")
             {
                 set delim=" "
                 set line = file.ReadLine()
-                set count =1
-                
-                //write !, "Loop started"
+                //set count =1
+                //set extracted = ""
+
+
+
+                write !, "Loop started"
                 write *32
                 
-                if (line '="") {
-                     write !, "Read started"
-                     write *32
+                for i=1:1:10{
+                    set id(i)=$PIECE(line, " ",i)
+                    //set extract1=$PIECE(line," ",1)
+                    //write "Extract1:",extract1 ,!
+                    write !, id(i)
+                    set i = $INCREMENT(i)
+                    write *32
+                    write i ,!
+                    write *32
+                    //write $LENGTH(line)
 
-                     set plan(count)=$LISTFROMSTRING(line, delim)
-                     write plan(count) ,!
-                     //set ^answers(count)=$ZSTRIP(list,"="," ") // for only spaces
-                     //write ^answers(count) ,!
-                     write *32
-                    
-                     
-                     
-                     
-                     set count=$INCREMENT(count)
                 }
-                      
-            }
-              
+
+                //write id(2) ,!
+                    //write *32
+                    //write line ,!
+                    //set count = count +1 
+                    //set extracted(count) = $EXTRACT(line,1,40)
+                    //write *32
+                    //write count,"Extracted:",extracted(count) ,!
+
+                     
+                    write *32
+                    
+                    //set count = $INCREMENT(count)     
+
+                    
+                //}
+}
+                write !, "Loop ended"
                 write !,*32
-                
-                Write ..Count(.plan)
+                //write "Extracted again:",^extracted(3)
+                //Write ..Count(.plan)
                 
                 write !, "Import process complete"
                 write *32
