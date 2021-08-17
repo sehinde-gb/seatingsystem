@@ -22,26 +22,24 @@ ClassMethod Import(dir As %String = "/usr/local/day11.txt")
             {
                 set delim=" "
                 set line = file.ReadLine()
-                set i=1
+                set count =1
                 
-                write !, "Loop started"
+                //write !, "Loop started"
                 write *32
                 
                 if (line '="") {
                      write !, "Read started"
                      write *32
 
-                     set list=$LISTFROMSTRING(line, delim)
-                     write list ,!
+                     set plan(count)=$LISTFROMSTRING(line, delim)
+                     write plan(count) ,!
                      //set ^answers(count)=$ZSTRIP(list,"="," ") // for only spaces
                      //write ^answers(count) ,!
                      write *32
                     
                      
-                     //set ^attempt(count)=^attempt(count)_$ZHEX(($ASCII($LIST(^answers(count)))))
-                     //write "Attempt:", ^attempt(count) ,!
-                     //set countdown=$LENGTH(line,delim)
-                     set i=$INCREMENT(i)
+                     
+                     
                      set count=$INCREMENT(count)
                 }
                       
@@ -49,12 +47,23 @@ ClassMethod Import(dir As %String = "/usr/local/day11.txt")
               
                 write !,*32
                 
-                write !, "Double checking"
-                write !,*32
-                write !, "1st element of answers array: ", $LIST(^answers(1))
+                Write ..Count(.plan)
                 
                 write !, "Import process complete"
                 write *32
 }
+
+ClassMethod Count(ByRef pArray) As %Integer [ PublicList = pArray ]
+{
+    set count = 0
+    set ref = $Query(pArray(""))
+    While (ref '= "") {
+        set count = count + 1
+        set ref = $query(@ref)
+    }
+    Quit count
+}
+
+/// Description
 
 }
