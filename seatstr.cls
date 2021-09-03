@@ -1,10 +1,15 @@
 Class Missing.SeatStr Extends %String
 {
 
-ClassMethod SetArray() As %Status
+    Property seatStr As %ArrayOfDataTypes;
+    Property occupied As %ArrayOfDataTypes;
+
+
+// Set up the seat and occupied arrays for use
+ClassMethod SetArray(ByRef seatStr As %ArrayOfDataTypes,ByRef occupied As %ArrayOfDataTypes) As %Status
 {
            
-            set seatStr=##class(%ArrayOfDataTypes).%New()
+            
             do seatStr.SetAt("L.LL.LL.LL","1")
             do seatStr.SetAt("LLLLLLL.LL", "2")
             do seatStr.SetAt("L.L.L..L..", "3")
@@ -16,7 +21,7 @@ ClassMethod SetArray() As %Status
             do seatStr.SetAt("L.LLLLLL.L", "9")
             do seatStr.SetAt("L.LLLLL.LL", "10")
             
-            set occupied=##class(%ArrayOfDataTypes).%New()
+            
            
             do occupied.SetAt("#.##.##.##", "1")
             do occupied.SetAt("#######.##", "2")
@@ -29,13 +34,12 @@ ClassMethod SetArray() As %Status
             do occupied.SetAt("#.######.#", "9")
             do occupied.SetAt("#.#####.##", "10")
             
-            // Finding a key
-            //write occupied.GetAt("####.##.##") ,!
+            
            
             
             write *32
             write "Count: ",seatStr.Count()
-            //set count = initial.Count()
+            
 
             do ..Main(.seatStr, .count)
 }
@@ -73,7 +77,6 @@ ClassMethod Main(ByRef seatStr As %String) As %Status
 
         write "main" ,!
         
-        //do ..findnextSeat(.seatStr)
         do ..findnextSeatChanges(.seatStr)
         quit
         do ..IsIdentical(.seatStr,.lastArr)
@@ -226,7 +229,7 @@ ClassMethod IsIdentical(Str1 As %String, Str2 As %String) As %Status
     quit 1
 }
 
-/// Description
+/// Set the areas of seating to the direction of seating , extract the seat type and update the total
 ClassMethod occupiedseatsChg(seatStr As %String, X, Y)
 {
     set length=$LENGTH(seatStr(Y)), Total=0,LastY=$ORDER(seatStr(""),-1)
@@ -324,7 +327,7 @@ ClassMethod occupiedseatsChg(seatStr As %String, X, Y)
     quit Total
 }
 
-/// Description
+/// Set up a loop to order the seating rows and then check to see if the length of the seats has the correct data format within the row
 ClassMethod VerifyData(seatStr As %String, row As %Integer)
 {
     set line="", Error=""
